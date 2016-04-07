@@ -118,7 +118,17 @@ func (api *DoApi) FilterCachedDroplets(pattern string) []godo.Droplet {
 
 func fillResponse(queryAddress string, droplets []godo.Droplet, cfg Config, msg *dns.Msg) {
 	for _, droplet := range droplets {
-		doIP, err := droplet.PublicIPv4()
+		var (
+			doIP string
+			err  error
+		)
+
+		if cfg.PrivateIP {
+			doIP, err = droplet.PrivateIPv4()
+		} else {
+			doIP, err = droplet.PublicIPv4()
+		}
+
 		if err != nil {
 			log.Println("Failed to get droplet ip", droplet.Name, err)
 			return
@@ -126,7 +136,12 @@ func fillResponse(queryAddress string, droplets []godo.Droplet, cfg Config, msg 
 
 		a := net.ParseIP(doIP)
 		rr := new(dns.A)
-		rr.Hdr = dns.RR_Header{Name: queryAddress, Rrtype: dns.TypeA, Class: dns.ClassINET, Ttl: cfg.Ttl}
+		rr.Hdr = dns.RR_Header{
+			Name:   queryAddress,
+			Rrtype: dns.TypeA,
+			Class:  dns.ClassINET,
+			Ttl:    cfg.Ttl,
+		}
 		rr.A = a.To4()
 
 		msg.Answer = append(msg.Answer, rr)
