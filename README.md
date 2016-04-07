@@ -29,7 +29,8 @@ Easiest way to set this up:
 
 - Get an Ubuntu droplet
 - Install nginx
-- Download the linux binary from the releases page
+- Download the linux binary from the releases page, or `go get
+  github.com/lxfontes/droplet-lb`
 - Get a [Personal Access Token](https://cloud.digitalocean.com/settings/api/tokens)
 - Well.... run droplet-lb with your token and domain
 - For a load-balancer setup, use the file [nginx.conf](nginx.conf) as starting point
