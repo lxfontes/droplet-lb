@@ -15,7 +15,7 @@ use the first part of the DNS name as a prefix during name lookup.
 ~ ❯❯❯ dig @localhost -p 8053 web.droplet-lb A +noall +answer
 
 ; <<>> DiG 9.8.3-P1 <<>> @localhost -p 8053 web.droplet-lb A +noall +answer
-; (2 servers found)
+; (1 server found)
 ;; global options: +cmd
 web.droplet-lb.   30  IN  A 104.131.52.84
 web.droplet-lb.   30  IN  A 159.203.175.202
